@@ -192,6 +192,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -202,6 +204,10 @@
     <Compile Include="Migrations\201811251820393_AddRegister.cs" />
     <Compile Include="Migrations\201811251820393_AddRegister.Designer.cs">
       <DependentUpon>201811251820393_AddRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811251958025_UpdateIdentityModels.cs" />
+    <Compile Include="Migrations\201811251958025_UpdateIdentityModels.Designer.cs">
+      <DependentUpon>201811251958025_UpdateIdentityModels.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -309,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811251820393_AddRegister.resx">
       <DependentUpon>201811251820393_AddRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251958025_UpdateIdentityModels.resx">
+      <DependentUpon>201811251958025_UpdateIdentityModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
