@@ -219,6 +219,15 @@
     <Compile Include="Models\Year.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CourseFilesProjects.cs" />
+    <Compile Include="ViewModels\CourseFilesViewModel.cs" />
+    <Compile Include="ViewModels\CreateCourseViewModel.cs" />
+    <Compile Include="ViewModels\NewRegisterUser.cs" />
+    <Compile Include="ViewModels\StudentCoursesProjectsViewModel.cs" />
+    <Compile Include="ViewModels\StudentCourseViewModel.cs" />
+    <Compile Include="ViewModels\StudentProjectFilesViewModel.cs" />
+    <Compile Include="ViewModels\StudentSpecialization_Semester_YearViewModel.cs" />
+    <Compile Include="ViewModels\TeacherCoursesProjectsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
