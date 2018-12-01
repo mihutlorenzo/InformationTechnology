@@ -1,10 +1,13 @@
 ﻿$("#RegisterViewModel_UserTypeId").change(function () {
     var selectedValue = $('#RegisterViewModel_UserTypeId :selected').text();
-    var teacherDIV = $("#teacher");
+    var teacherDiv = $("#teacher");
+    var studentDiv = $("#student");
     if (selectedValue == "Teacher") {
-        teacherDIV.show();
+        teacherDiv.show();
+        studentDiv.hide();
     } else {
-        teacherDIV.hide();
+        teacherDiv.hide();
+        studentDiv.show();
     }
 
 });

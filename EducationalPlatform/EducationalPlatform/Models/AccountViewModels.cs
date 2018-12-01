@@ -93,6 +93,17 @@ namespace EducationalPlatform.Models
         [Required]
         [Display(Name = "Type")]
         public byte UserTypeId { get; set; }
+
+        //[Required]
+        //[StringLength(5)]
+        //[Display(Name = "Code")]
+        //public string CodeValue { get; set; }
+
+        //[Required]
+        //[StringLength(100)]
+        //[Display(Name = "Specialization")]
+        //public string Specialization { get; set; }
+
     }
 
     public class ResetPasswordViewModel

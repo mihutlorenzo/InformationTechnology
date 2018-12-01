@@ -13,6 +13,7 @@ namespace EducationalPlatform.ViewModels
         //public IEnumerable<string> Specialization { get; set; }
         //public IEnumerable<int> Year { get; set; }
         public Codes Code { get; set; }
+        public Specialization Specialization { get; set; }
         public RegisterViewModel RegisterViewModel { get; set; }
     }
 }
