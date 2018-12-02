@@ -91,5 +91,27 @@ namespace EducationalPlatform.Controllers
 
             return View("EditStudentProfile", studentSpecializationSemesterYear);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(StudentSpecialization_Semester_YearViewModel studentValues)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EditStudentProfile", studentValues.Student.ApplicationUserId);
+            }
+            var student = studentValues.Student;
+
+            var studentInDb = _context.Students.Include(s => s.ApplicationUser).Single(s => s.StudentId == student.StudentId);
+            studentInDb.ApplicationUser.FirstName = student.ApplicationUser.FirstName;
+            studentInDb.ApplicationUser.LastName = student.ApplicationUser.LastName;
+            studentInDb.SpecializationId = student.SpecializationId;
+            studentInDb.SemesterId = student.SemesterId;
+            studentInDb.YearId = student.YearId;
+            _context.SaveChanges();
+
+            return RedirectToAction("StudentProfile/" + studentInDb.ApplicationUserId, "Students");
+        }
     }
 }
