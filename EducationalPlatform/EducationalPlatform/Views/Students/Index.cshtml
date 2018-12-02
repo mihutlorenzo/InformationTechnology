@@ -1,0 +1,47 @@
+﻿@model EducationalPlatform.ViewModels.StudentCourseViewModel
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Html.ActionLink(string.Concat(string.Concat(Model.Student.ApplicationUser.FirstName, " "), Model.Student.ApplicationUser.LastName), "StudentProfile", "Students", new { id = Model.Student.ApplicationUserId }, null)</h2>
+@if (!Model.Courses.Any())
+{
+    <p>We don't have any course yet.</p>
+}
+else
+{
+    <table id="courses" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Course name</th>
+                <th>Course specialization</th>
+                <th>Course year</th>
+                <th>Semester</th>
+                <th>Teacher's name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model.Courses)
+            {
+                <tr>
+                    <td>@Html.ActionLink(course.CourseName, "Index", "Courses", new { id = course.CourseId, studentId = Model.Student.ApplicationUserId}, null)</td>
+                    <td>@course.Specialization.SpecializationName</td>
+                    <td>@course.Year.YearValue</td>
+                    <td>@course.Semester.SemesterValue</td>
+                    <td>@string.Concat(string.Concat(course.Teacher.ApplicationUser.FirstName, " "), course.Teacher.ApplicationUser.LastName)</td>
+                </tr>
+            }
+        </tbody>
+    </table> 
+
+    @section scripts
+    {
+        <script>
+            $(document).ready(function () {
+                $("#courses").DataTable();
+            });
+        </script>
+    }
+}

@@ -224,6 +224,7 @@
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Models\Year.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\StudentService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CourseFilesProjects.cs" />
     <Compile Include="ViewModels\CourseFilesViewModel.cs" />
@@ -236,6 +237,10 @@
     <Compile Include="ViewModels\TeacherCoursesProjectsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-EducationalPlatform-20181125062447.mdf" />
+    <Content Include="App_Data\aspnet-EducationalPlatform-20181125062447_log.ldf">
+      <DependentUpon>aspnet-EducationalPlatform-20181125062447.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -293,10 +298,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Students\StudentProfile.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

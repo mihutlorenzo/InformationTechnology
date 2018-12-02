@@ -1,0 +1,88 @@
+﻿@model EducationalPlatform.ViewModels.StudentCoursesProjectsViewModel
+@{
+    ViewBag.Title = "StudentProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Student.ApplicationUser.FirstName @Model.Student.ApplicationUser.LastName</h2>
+
+<ul>
+    <li>Student email address: @Model.Student.ApplicationUser.Email</li>
+    @if (Model.Student.Specialization != null)
+    {
+        <li>Student specialization: @Model.Student.Specialization.SpecializationName</li>
+    }
+    @if (Model.Student.Semester != null)
+    {
+        <li>Student semester: @Model.Student.Semester.SemesterValue</li>
+    }
+    @if (Model.Student.Year != null)
+    {
+        <li>Student study year: @Model.Student.Year.YearValue</li>
+    }
+    
+</ul>
+@if (!Model.Courses.Any())
+{
+    <p>The student is not register to a course.</p>
+}
+else
+{
+    <table id="courses" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Course name</th>
+                <th>Course specialization</th>
+                <th>Course year</th>
+                <th>Semester</th>
+                <th>Teacher's name</th>
+                <th>Unregister</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model.Courses)
+            {
+                <tr>
+                    <td>@Html.ActionLink(course.CourseName, "Details", "Courses", new { id = course.CourseId }, null)</td>
+                    <td>@course.Specialization.SpecializationName</td>
+                    <td>@course.Semester.SemesterValue</td>
+                    <td>@course.Year.YearValue</td>
+                    <td>@string.Concat(string.Concat(course.Teacher.ApplicationUser.FirstName, " "), course.Teacher.ApplicationUser.LastName)</td>
+                    <td>
+                        <button data-student-id="@Model.Student.StudentId" data-course-id="@course.CourseId" class="btn-link js-delete">Unregister</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@if (!Model.Projects.Any())
+{
+    <p>The student has no project yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Project name</th>
+                <th>Teacher' s name</th>
+                <th>Course name</th>
+                <th>Project mark</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+                <tr>
+                    <td>@Html.ActionLink(project.ProjectName, "Index", "Projects", new { id = project.Id }, null)</td>
+                    <td>@string.Concat(string.Concat(project.Course.Teacher.ApplicationUser.FirstName," "), project.Course.Teacher.ApplicationUser.LastName)</td>
+                    <td>@project.Course.CourseName</td>
+                    <td>@project.Mark</td>
+                </tr>
+             }
+        </tbody>
+    </table>
+}
