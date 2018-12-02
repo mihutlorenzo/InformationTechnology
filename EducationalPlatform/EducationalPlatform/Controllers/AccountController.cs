@@ -100,7 +100,7 @@ namespace EducationalPlatform.Controllers
                     }
                     else if (user.UserTypeId == 2)
                     {
-                        return RedirectToLocal("/Teacher/Index/" + user.Id);
+                        return RedirectToLocal("/Teachers/Index/" + user.Id);
                     }
                     return RedirectToLocal(returnUrl);
 
@@ -164,11 +164,18 @@ namespace EducationalPlatform.Controllers
         public ActionResult Register()
         {
             var userTypes = _context.UserTypes.ToList();
+            var specializations = _context.Specializations.ToList();
+            var groups = _context.Groups.ToList();
+            var semesters = _context.Semesters.ToList();
+            var years = _context.Years.ToList();
 
             var viewModel = new NewRegisterUser
             {
-
-                UserTypes = userTypes
+                UserTypes = userTypes,
+                Specializations = specializations,
+                Groups = groups,
+                Semesters = semesters,
+                Years = years
             };
             return View(viewModel);
         }
@@ -184,8 +191,7 @@ namespace EducationalPlatform.Controllers
             {
                 var model = newUser.RegisterViewModel;
 
-
-                if (newUser.RegisterViewModel.UserTypeId == 1)
+                if (model.UserTypeId == 1)
                 {
                     var user = new ApplicationUser
                     {
@@ -194,18 +200,13 @@ namespace EducationalPlatform.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         UserTypeId = model.UserTypeId
-
                     };
-
 
 
                     var result = await UserManager.CreateAsync(user, model.Password);
 
-
-
                     if (result.Succeeded)
                     {
-
                         await UserManager.AddToRoleAsync(user.Id, "StudentRole");
 
 
@@ -213,6 +214,10 @@ namespace EducationalPlatform.Controllers
 
                         var student = new Student
                         {
+                            SpecializationId = model.SpecializationId,
+                            GroupId = model.GroupId,
+                            SemesterId = model.SemesterId,
+                            YearId = model.YearId,
                             ApplicationUserId = user.Id
                         };
                         _context.Students.Add(student);
@@ -228,11 +233,11 @@ namespace EducationalPlatform.Controllers
                     }
                     AddErrors(result);
                 }
-                if (newUser.RegisterViewModel.UserTypeId == 2)
+                if (model.UserTypeId == 2)
                 {
-                    var teacherCode = _context.Codes.SingleOrDefault(c => c.TeacherLastName == model.LastName);
+                    var teacherCode = _context.Codes.SingleOrDefault(c => c.TeacherEmail == model.Email);
 
-                    if (newUser.Code.CodeValue == teacherCode.CodeValue)
+                    if (model.TeacherCode == teacherCode.CodeValue)
                     {
                         var user = new ApplicationUser
                         {
@@ -256,7 +261,9 @@ namespace EducationalPlatform.Controllers
 
                             var teacher = new Teacher
                             {
-                                ApplicationUserId = user.Id
+                                ApplicationUserId = user.Id,
+                                RegisterCode = model.TeacherCode
+                                
                             };
                             _context.Teachers.Add(teacher);
                             _context.SaveChanges();
@@ -307,7 +314,8 @@ namespace EducationalPlatform.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(newUser);
+            // return View(newUser);
+            return RedirectToAction("Register", "Account");
         }
 
         //

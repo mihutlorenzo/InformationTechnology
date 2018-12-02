@@ -11,6 +11,6 @@ namespace EducationalPlatform.Models
         public byte YearId { get; set; }
 
         [Range(1, 4)]
-        public byte YearValue { get; set; }
+        public string YearName { get; set; }
     }
 }

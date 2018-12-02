@@ -49,6 +49,7 @@ namespace EducationalPlatform.Models
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Year> Years { get; set; }
         public DbSet<Semester> Semesters { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
 
         public ApplicationDbContext()

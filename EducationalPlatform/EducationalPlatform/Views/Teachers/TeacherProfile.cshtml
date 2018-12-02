@@ -1,0 +1,26 @@
+﻿@model EducationalPlatform.Models.Teacher
+@{
+    ViewBag.Title = "TeacherProfile";
+}
+
+<h2>@Html.ActionLink("Edit teacher's profile", "EditTeacherProfile", "Teachers", new { id = Model.ApplicationUserId }, null)</h2>
+
+<ul>
+    <li>Teacher's full name is: @Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName</li>
+    <li>Teacher email address: @Model.ApplicationUser.Email</li>
+    @if (Model.URIToPersonalPage != null)
+    {
+        <li>Teacher persoanl page: <a href="@Model.URIToPersonalPage">@Model.URIToPersonalPage</a></li>
+
+    }
+    @if (Model.InfoAboutTeacher != null)
+    {
+        <li>Info about teacher: @Model.InfoAboutTeacher</li>
+    }
+    @if (Model.TeacherStatus != null)
+    {
+        <li>Teacher status: @Model.TeacherStatus</li>
+    }
+</ul>
+
+

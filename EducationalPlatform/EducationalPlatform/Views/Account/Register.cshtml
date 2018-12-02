@@ -49,28 +49,39 @@
         </div>
     </div>
     <div class="form-group" id="teacher" hidden>
-        @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.RegisterViewModel.TeacherCode, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Code.CodeValue, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.RegisterViewModel.TeacherCode, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group" id="student" hidden>
-        @Html.LabelFor(m => m.Specialization , new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.RegisterViewModel.SpecializationId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Specialization.SpecializationName, new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.RegisterViewModel.SpecializationId, new SelectList(Model.Specializations, "SpecializationId", "SpecializationName"), "Select student's specialization", new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(m => m.RegisterViewModel.GroupId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.RegisterViewModel.GroupId, new SelectList(Model.Groups, "GroupId", "GroupName"), "Select student's group", new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(m => m.RegisterViewModel.SemesterId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.RegisterViewModel.SemesterId, new SelectList(Model.Semesters, "SemesterId", "SemesterName"), "Select student's semester", new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(m => m.RegisterViewModel.YearId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.RegisterViewModel.YearId, new SelectList(Model.Years, "YearId", "YearName"), "Select student's year", new { @class = "form-control" })
         </div>
     </div>
-   
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
         </div>
-    </div>
-}
+        }
 
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/Education/register.js")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/Scripts/Education/register.js")
+        }

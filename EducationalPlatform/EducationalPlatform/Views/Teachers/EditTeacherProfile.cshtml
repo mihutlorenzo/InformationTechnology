@@ -1,0 +1,45 @@
+﻿@model EducationalPlatform.Models.Teacher
+@{
+    ViewBag.Title = "EditTeacherProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Edit teacher profile</h2>
+
+@using (Html.BeginForm("Save", "Teachers"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.ApplicationUser.FirstName)
+        @Html.TextBoxFor(m => m.ApplicationUser.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ApplicationUser.FirstName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ApplicationUser.LastName)
+        @Html.TextBoxFor(m => m.ApplicationUser.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ApplicationUser.LastName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.TeacherStatus)
+        @Html.TextBoxFor(m => m.TeacherStatus, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TeacherStatus)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.URIToPersonalPage)
+        @Html.TextBoxFor(m => m.URIToPersonalPage, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.URIToPersonalPage)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.InfoAboutTeacher)
+        @Html.TextBoxFor(m => m.InfoAboutTeacher, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.InfoAboutTeacher)
+    </div>
+
+   
+    @Html.HiddenFor(m => m.ApplicationUserId)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+
+
+}

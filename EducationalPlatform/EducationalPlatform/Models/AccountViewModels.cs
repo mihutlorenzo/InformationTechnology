@@ -93,16 +93,21 @@ namespace EducationalPlatform.Models
         [Required]
         [Display(Name = "Type")]
         public byte UserTypeId { get; set; }
-
-        //[Required]
-        //[StringLength(5)]
-        //[Display(Name = "Code")]
-        //public string CodeValue { get; set; }
-
-        //[Required]
-        //[StringLength(100)]
-        //[Display(Name = "Specialization")]
-        //public string Specialization { get; set; }
+        
+        [Display(Name = "Specialization")]
+        public byte? SpecializationId { get; set; }
+        
+        [Display(Name = "Group")]
+        public byte? GroupId { get; set; }
+        
+        [Display(Name = "Semester")]
+        public byte? SemesterId { get; set; }
+        
+        [Display(Name = "Year")]
+        public byte? YearId { get; set; }
+        
+        [Display(Name = "Code")]
+        public string TeacherCode { get; set; }
 
     }
 

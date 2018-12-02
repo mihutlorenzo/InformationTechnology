@@ -26,15 +26,15 @@ else
             @foreach (var course in Model.Courses)
             {
                 <tr>
-                    <td>@Html.ActionLink(course.CourseName, "Index", "Courses", new { id = course.CourseId, studentId = Model.Student.ApplicationUserId}, null)</td>
+                    <td>@Html.ActionLink(course.CourseName, "Index", "Courses", new { id = course.CourseId, studentId = Model.Student.ApplicationUserId }, null)</td>
                     <td>@course.Specialization.SpecializationName</td>
-                    <td>@course.Year.YearValue</td>
-                    <td>@course.Semester.SemesterValue</td>
+                    <td>@course.Year.YearName</td>
+                    <td>@course.Semester.SemesterName</td>
                     <td>@string.Concat(string.Concat(course.Teacher.ApplicationUser.FirstName, " "), course.Teacher.ApplicationUser.LastName)</td>
                 </tr>
             }
         </tbody>
-    </table> 
+    </table>
 
     @section scripts
     {

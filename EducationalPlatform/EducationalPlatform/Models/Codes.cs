@@ -12,6 +12,6 @@ namespace EducationalPlatform.Models
 
         [Display(Name = "Confirm password")]
         public string CodeValue { get; set; }
-        public string TeacherLastName { get; set; }
+        public string TeacherEmail { get; set; }
     }
 }

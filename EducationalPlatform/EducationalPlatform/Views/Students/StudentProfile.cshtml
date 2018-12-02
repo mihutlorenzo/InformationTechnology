@@ -4,23 +4,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Html.ActionLink(string.Concat(string.Concat(Model.Student.ApplicationUser.FirstName, " "), Model.Student.ApplicationUser.LastName), "EditStudentProfile", "Students", new { id = Model.Student.ApplicationUserId }, null)</h2>
+<h2>@Html.ActionLink("Edit student's profile", "EditStudentProfile", "Students", new { id = Model.Student.ApplicationUserId }, null)</h2>
 
 <ul>
-    <li>Student email address: @Model.Student.ApplicationUser.Email</li>
+    <li>Student's full name is: @Model.Student.ApplicationUser.FirstName @Model.Student.ApplicationUser.LastName</li>
+    <li>Student's email address: @Model.Student.ApplicationUser.Email</li>
     @if (Model.Student.Specialization != null)
     {
-        <li>Student specialization: @Model.Student.Specialization.SpecializationName</li>
+        <li>Student's specialization: @Model.Student.Specialization.SpecializationName</li>
+    }
+    @if (Model.Student.Group != null)
+    {
+        <li>Student's group: @Model.Student.Group.GroupName</li>
     }
     @if (Model.Student.Semester != null)
     {
-        <li>Student semester: @Model.Student.Semester.SemesterValue</li>
+        <li>Student's semester: @Model.Student.Semester.SemesterName</li>
     }
     @if (Model.Student.Year != null)
     {
-        <li>Student study year: @Model.Student.Year.YearValue</li>
+        <li>Student study year: @Model.Student.Year.YearName</li>
     }
-    
+
 </ul>
 @if (!Model.Courses.Any())
 {
@@ -45,8 +50,8 @@ else
                 <tr>
                     <td>@Html.ActionLink(course.CourseName, "Details", "Courses", new { id = course.CourseId }, null)</td>
                     <td>@course.Specialization.SpecializationName</td>
-                    <td>@course.Semester.SemesterValue</td>
-                    <td>@course.Year.YearValue</td>
+                    <td>@course.Semester.SemesterName</td>
+                    <td>@course.Year.YearName</td>
                     <td>@string.Concat(string.Concat(course.Teacher.ApplicationUser.FirstName, " "), course.Teacher.ApplicationUser.LastName)</td>
                     <td>
                         <button data-student-id="@Model.Student.StudentId" data-course-id="@course.CourseId" class="btn-link js-delete">Unregister</button>

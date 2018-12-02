@@ -28,21 +28,13 @@ namespace EducationalPlatform.Controllers
 
         public ActionResult Index(string id)
         {
-            var students = _context.Students.Include(s => s.ApplicationUser).Include(s => s.Specialization).Include(s => s.Semester).Include(s => s.Year).ToList();
-            Student theOne = new Student();
-            foreach (var student in students)
-            {
-                if (student.ApplicationUser.Id.Equals(id))
-                {
-                    theOne = student;
-                }
-            }
+            var student = _context.Students.Include(s => s.ApplicationUser).FirstOrDefault(s => s.ApplicationUserId == id);
             var courses = _context.Courses.Include(c => c.Teacher.ApplicationUser).Include(c => c.Specialization).Include(c => c.Semester).Include(c => c.Year).ToList();
 
             var studentAndCourses = new StudentCourseViewModel
             {
                 Courses = courses,
-                Student = theOne
+                Student = student
             };
 
             return View(studentAndCourses);
@@ -53,7 +45,7 @@ namespace EducationalPlatform.Controllers
 
         public ActionResult StudentProfile(string id)
         {
-            var student = _context.Students.Include(s => s.ApplicationUser).Include(s => s.Specialization).Include(s => s.Semester).Include(s => s.Year).SingleOrDefault(c => c.ApplicationUserId == id);
+            var student = _context.Students.Include(s => s.ApplicationUser).Include(s => s.Specialization).Include(s => s.Group).Include(s => s.Semester).Include(s => s.Year).SingleOrDefault(c => c.ApplicationUserId == id);
             if (student == null)
             {
                 return HttpNotFound();
@@ -62,30 +54,49 @@ namespace EducationalPlatform.Controllers
             var courses = _context.Students.Where(s => s.StudentId == student.StudentId).SelectMany(c => c.Courses).Include(c => c.Teacher.ApplicationUser).Include(s => s.Specialization).Include(s => s.Semester).Include(s => s.Year).ToList();
             var projects = _context.Projects.ToList();
 
-            var studentService = new StudentService();
-            var model = studentService.StudentProfile(student, courses, projects);
+            //var studentService = new StudentService();
+            //var model = studentService.StudentProfile(student, courses, projects);
 
-            return View("StudentProfile", model);
+            foreach (var course in courses)
+            {
+                var project = projects.SingleOrDefault(p => p.CourseId == course.CourseId);
+                if (project != null)
+                {
+                    projects.Add(project);
+                }
+
+            }
+
+            var studentCoursesProjects = new StudentCoursesProjectsViewModel
+            {
+                Student = student,
+                Courses = courses,
+                Projects = projects
+            };
+
+            return View("StudentProfile", studentCoursesProjects);
         }
 
 
 
         public ActionResult EditStudentProfile(string id)
         {
-            var student = _context.Students.Include(s => s.ApplicationUser).SingleOrDefault(s => s.ApplicationUserId == id);
-            var specialization = _context.Specializations.ToList();
-            var semester = _context.Semesters.ToList();
-            var year = _context.Years.ToList();
+            var student = _context.Students.Include(s => s.ApplicationUser).Include(s => s.Specialization).Include(s => s.Group).Include(s => s.Semester).Include(s => s.Year).SingleOrDefault(s => s.ApplicationUserId == id);
+            var specializations = _context.Specializations.ToList();
+            var groups = _context.Groups.ToList();
+            var semesters = _context.Semesters.ToList();
+            var years = _context.Years.ToList();
 
-            if (student == null || specialization == null || semester == null || year == null)
+            if (student == null || specializations == null || groups == null || semesters == null || years == null)
             {
                 return HttpNotFound();
             }
-            var studentSpecializationSemesterYear = new StudentSpecialization_Semester_YearViewModel
+            var studentSpecializationSemesterYear = new StudentSpecializationGroupSemesterYearViewModel
             {
-                Specializations = specialization,
-                Semesters = semester,
-                Years = year,
+                Specializations = specializations,
+                Groups = groups,
+                Semesters = semesters,
+                Years = years,
                 Student = student
             };
 
@@ -95,11 +106,12 @@ namespace EducationalPlatform.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(StudentSpecialization_Semester_YearViewModel studentValues)
+        public ActionResult Save(StudentSpecializationGroupSemesterYearViewModel studentValues)
         {
             if (!ModelState.IsValid)
             {
-                return View("EditStudentProfile", studentValues.Student.ApplicationUserId);
+                //return View("EditStudentProfile", studentValues.Student.ApplicationUserId);
+                return RedirectToAction("EditStudentProfile", "Students");
             }
             var student = studentValues.Student;
 
@@ -107,6 +119,7 @@ namespace EducationalPlatform.Controllers
             studentInDb.ApplicationUser.FirstName = student.ApplicationUser.FirstName;
             studentInDb.ApplicationUser.LastName = student.ApplicationUser.LastName;
             studentInDb.SpecializationId = student.SpecializationId;
+            studentInDb.GroupId = student.GroupId;
             studentInDb.SemesterId = student.SemesterId;
             studentInDb.YearId = student.YearId;
             _context.SaveChanges();

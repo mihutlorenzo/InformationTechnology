@@ -9,11 +9,10 @@ namespace EducationalPlatform.ViewModels
     public class NewRegisterUser
     {
         public IEnumerable<UserType> UserTypes { get; set; }
-        //public IEnumerable<string> GroupName { get; set; }
-        //public IEnumerable<string> Specialization { get; set; }
-        //public IEnumerable<int> Year { get; set; }
-        public Codes Code { get; set; }
-        public Specialization Specialization { get; set; }
+        public IEnumerable<Specialization> Specializations { get; set; }
+        public IEnumerable<Group> Groups { get; set; }
+        public IEnumerable<Semester> Semesters { get; set; }
+        public IEnumerable<Year> Years { get; set; }
         public RegisterViewModel RegisterViewModel { get; set; }
     }
 }

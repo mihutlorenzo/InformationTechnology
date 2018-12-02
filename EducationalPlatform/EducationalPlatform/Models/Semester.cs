@@ -10,7 +10,8 @@ namespace EducationalPlatform.Models
     {
         public byte SemesterId { get; set; }
 
-        [Range(1, 2)]
-        public byte SemesterValue { get; set; }
+        [Required]
+        [StringLength(60)]
+        public string SemesterName { get; set; }
     }
 }
