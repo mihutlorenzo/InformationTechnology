@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Student.ApplicationUser.FirstName @Model.Student.ApplicationUser.LastName</h2>
+<h2>@Html.ActionLink(string.Concat(string.Concat(Model.Student.ApplicationUser.FirstName, " "), Model.Student.ApplicationUser.LastName), "EditStudentProfile", "Students", new { id = Model.Student.ApplicationUserId }, null)</h2>
 
 <ul>
     <li>Student email address: @Model.Student.ApplicationUser.Email</li>

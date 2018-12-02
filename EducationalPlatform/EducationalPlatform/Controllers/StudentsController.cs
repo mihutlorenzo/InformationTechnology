@@ -67,5 +67,29 @@ namespace EducationalPlatform.Controllers
 
             return View("StudentProfile", model);
         }
+
+
+
+        public ActionResult EditStudentProfile(string id)
+        {
+            var student = _context.Students.Include(s => s.ApplicationUser).SingleOrDefault(s => s.ApplicationUserId == id);
+            var specialization = _context.Specializations.ToList();
+            var semester = _context.Semesters.ToList();
+            var year = _context.Years.ToList();
+
+            if (student == null || specialization == null || semester == null || year == null)
+            {
+                return HttpNotFound();
+            }
+            var studentSpecializationSemesterYear = new StudentSpecialization_Semester_YearViewModel
+            {
+                Specializations = specialization,
+                Semesters = semester,
+                Years = year,
+                Student = student
+            };
+
+            return View("EditStudentProfile", studentSpecializationSemesterYear);
+        }
     }
 }
