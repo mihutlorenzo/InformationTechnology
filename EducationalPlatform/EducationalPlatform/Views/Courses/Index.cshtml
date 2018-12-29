@@ -1,0 +1,79 @@
+﻿@model EducationalPlatform.ViewModels.CourseFilesProjects
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Course.CourseName</h2>
+@if (Model.Student != null)
+{
+    using (Html.BeginForm("RegisterToCourse", "Courses", new { id = Model.Student.ApplicationUserId, courseId = Model.Course.CourseId }, FormMethod.Post, null))
+    {
+
+
+        <button type="submit" class="btn btn-primary">RegisterToCourse</button>
+    }
+
+
+}
+<ul>
+    <li>Course description: @Model.Course.CourseDescription</li>
+    <li>Teacher name : @string.Concat(string.Concat(Model.Course.Teacher.ApplicationUser.FirstName, " "), Model.Course.Teacher.ApplicationUser.LastName)</li>
+    <li>Course specialization: @Model.Course.Specialization.SpecializationName</li>
+    <li>Course semester: @Model.Course.Semester.SemesterName</li>
+    <li>Course year: @Model.Course.Year.YearName</li>
+</ul>
+
+
+
+@if (!Model.Files.Any())
+{
+    <p>We don't have any file to this course yet.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(model => model.Files)
+            </th>
+
+            <th class="col-md-2"></th>
+        </tr>
+
+        @foreach (var item in Model.Files)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Download", "DownLoadFile", "Files", new { id = item.Id }, null)
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+
+@if (Model.Projects == null)
+{
+    <p>You have to register to course in order to have the option to see homework .</p>
+}
+else
+{
+    <h3>Projects</h3>
+    <ul>
+        @foreach (var project in Model.Projects)
+        {
+
+            <li>@Html.ActionLink(project.ProjectName, "StudentProject", "Projects", new { id = Model.Student.ApplicationUserId, projectId = project.Id }, null)</li>
+
+
+        }
+    </ul>
+}
