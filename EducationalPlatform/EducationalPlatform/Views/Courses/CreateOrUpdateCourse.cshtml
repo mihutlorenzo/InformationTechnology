@@ -1,10 +1,12 @@
 ﻿@model EducationalPlatform.ViewModels.CreateCourseViewModel
 @{
+    /**/
+
     ViewBag.Title = "CreateOrUpdateCourse";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CreateCourse</h2>
+<h2>Create course</h2>
 
 
 @using (Html.BeginForm("Save", "Courses", new { id = Model.TeacherId }, FormMethod.Post, null))
@@ -28,39 +30,42 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Course.SemesterId)
 
-        @Html.DropDownListFor(m => m.Course.SemesterId, new SelectList(Model.Semesters, "SemesterId", "SemesterValue"), "Select semester", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Course.SemesterId, new SelectList(Model.Semesters, "SemesterId", "SemesterName"), "Select semester", new { @class = "form-control" })
 
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Course.YearId)
 
-        @Html.DropDownListFor(m => m.Course.YearId, new SelectList(Model.Years, "YearId", "YearValue"), "Select year", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.Course.YearId, new SelectList(Model.Years, "YearId", "YearName"), "Select year", new { @class = "form-control" })
 
     </div>
+
+    @Html.HiddenFor(m => m.Course.CourseId)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    <br />
+    <br />
 
     if (Model.Course != null)
     {
         @Html.ActionLink("Add a file to course", "Index", "Files", new { id = Model.Course.CourseId }, new { @class = "btn btn-primary" })
         <p>
-
+            <br />
             @Html.ActionLink("Add a project", "CreateNewProject", "Projects", new { courseId = Model.Course.CourseId }, new { @class = "btn btn-primary" })
-            @*@if (Model.Projects != null)
+
+            @if (Model.Projects != null)
             {
                 <ul>
                     @foreach (var project in Model.Projects)
                     {
                         <li>
-                            @Html.ActionLink(project.ProjectName, "UploadFileForProject", "Projects", new { id = project.id }, null)
+                            @Html.ActionLink(project.ProjectName, "UploadFileForProject", "Projects", new { id = project.Id }, null)
                         </li>
                     }
 
                 </ul>
-            }*@
+            }
         </p>
     }
-
-
-    @Html.HiddenFor(m => m.Course.CourseId)
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Save</button>
 }

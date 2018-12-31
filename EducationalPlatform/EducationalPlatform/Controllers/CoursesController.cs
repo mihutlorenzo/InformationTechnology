@@ -96,7 +96,6 @@ namespace EducationalPlatform.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(int id, CreateCourseViewModel newCourse)
         {
-
             var course = newCourse.Course;
             course.TeacherId = id;
             if (course.CourseId == 0)
@@ -111,14 +110,13 @@ namespace EducationalPlatform.Controllers
                 courseInDb.YearId = course.YearId;
                 courseInDb.TeacherId = course.TeacherId;
             }
-
-
             _context.SaveChanges();
 
             var teacher = _context.Teachers.SingleOrDefault(t => t.TeacherId == id);
 
-            return RedirectToAction("Index/" + teacher.ApplicationUserId, "Teacher");
+            return RedirectToAction("Index/" + teacher.ApplicationUserId, "Teachers");
         }
+
 
         public ActionResult EditCourse(int id)
         {
@@ -161,7 +159,7 @@ namespace EducationalPlatform.Controllers
         public ActionResult CreateOrUpdateCourse(int? teacherId)
         {
 
-            //var teachers = _context.Teachers.Include(c => c.ApplicationUser).ToList();
+            var teachers = _context.Teachers.Include(c => c.ApplicationUser).ToList();
             var specialization = _context.Specializations.ToList();
             var semester = _context.Semesters.ToList();
             var year = _context.Years.ToList();
@@ -178,7 +176,6 @@ namespace EducationalPlatform.Controllers
                 Semesters = semester,
                 Years = year
             };
-
 
             return View("CreateOrUpdateCourse", createNewCourse);
         }

@@ -5,30 +5,28 @@
 }
 
 <h2>@Model.Course.CourseName</h2>
-@if (Model.Student != null)
-{
-    using (Html.BeginForm("RegisterToCourse", "Courses", new { id = Model.Student.ApplicationUserId, courseId = Model.Course.CourseId }, FormMethod.Post, null))
-    {
 
-
-        <button type="submit" class="btn btn-primary">RegisterToCourse</button>
-    }
-
-
-}
 <ul>
     <li>Course description: @Model.Course.CourseDescription</li>
-    <li>Teacher name : @string.Concat(string.Concat(Model.Course.Teacher.ApplicationUser.FirstName, " "), Model.Course.Teacher.ApplicationUser.LastName)</li>
+    <li>Teacher's name : @string.Concat(string.Concat(Model.Course.Teacher.ApplicationUser.FirstName, " "), Model.Course.Teacher.ApplicationUser.LastName)</li>
     <li>Course specialization: @Model.Course.Specialization.SpecializationName</li>
     <li>Course semester: @Model.Course.Semester.SemesterName</li>
     <li>Course year: @Model.Course.Year.YearName</li>
 </ul>
 
+@if (Model.Student.Courses == null)
+{
+    using (Html.BeginForm("RegisterToCourse", "Courses", new { id = Model.Student.ApplicationUserId, courseId = Model.Course.CourseId }, FormMethod.Post, null))
+    {
+        <button type="submit" class="btn btn-primary">Register</button>
+    }
+}
 
+<br />
 
 @if (!Model.Files.Any())
 {
-    <p>We don't have any file to this course yet.</p>
+    <p>There are no additional info to show yet.</p>
 }
 else
 {
@@ -50,30 +48,31 @@ else
 
                 <td>
                     @Html.ActionLink("Download", "DownLoadFile", "Files", new { id = item.Id }, null)
-
-
                 </td>
             </tr>
         }
-
     </table>
 }
 
 
 @if (Model.Projects == null)
 {
-    <p>You have to register to course in order to have the option to see homework .</p>
+    <p>You have to be registered to this course in order to have access to the project section.</p>
 }
 else
 {
-    <h3>Projects</h3>
-    <ul>
-        @foreach (var project in Model.Projects)
-        {
-
-            <li>@Html.ActionLink(project.ProjectName, "StudentProject", "Projects", new { id = Model.Student.ApplicationUserId, projectId = project.Id }, null)</li>
-
-
-        }
-    </ul>
+    if (!Model.Projects.Any())
+    {
+        <p>There are no projects available for this course.</p>
+    }
+    else
+    {
+        <h3>Projects</h3>
+        <ul>
+            @foreach (var project in Model.Projects)
+            {
+                <li>@Html.ActionLink(project.ProjectName, "StudentProject", "Projects", new { id = Model.Student.ApplicationUserId, projectId = project.Id }, null)</li>
+            }
+        </ul>
+    }
 }
