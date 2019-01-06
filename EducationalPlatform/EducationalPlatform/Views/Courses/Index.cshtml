@@ -1,4 +1,4 @@
-﻿@model EducationalPlatform.ViewModels.CourseFilesProjects
+﻿@model EducationalPlatform.ViewModels.CourseFilesProjectsViewModel
 @{
     ViewBag.Title = "Courses";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -55,7 +55,7 @@ else
 }
 
 
-@if (Model.Projects == null)
+@*@if (Model.Projects == null)
 {
     <p>You have to be registered to this course in order to have access to the project section.</p>
 }
@@ -75,4 +75,4 @@ else
             }
         </ul>
     }
-}
+}*@

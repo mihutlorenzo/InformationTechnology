@@ -11,7 +11,6 @@ namespace EducationalPlatform.ViewModels
         public IEnumerable<Specialization> Specializations { get; set; }
         public IEnumerable<Semester> Semesters { get; set; }
         public IEnumerable<Year> Years { get; set; }
-        public IEnumerable<Project> Projects { get; set; }
         public int TeacherId { get; set; }
         public Course Course { get; set; }
     }

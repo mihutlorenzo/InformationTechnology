@@ -1,0 +1,119 @@
+﻿@model EducationalPlatform.ViewModels.CourseFilesViewModel
+@{
+    ViewBag.Title = "FileUpload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*@using (Html.BeginForm("FileUpload", "FileUploadDownload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.PDFFile, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.PDFFile, "", new { @type = "file", @multiple = "multiple" })
+                    @Html.ValidationMessageFor(model => model.PDFFile, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 text-success">
+                    @ViewBag.FileStatus
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-8">
+                    @Html.Action("FileDetails", "FileUploadDownload")
+
+                </div>
+            </div>
+        </div>
+    }
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>*@
+@*<body>*@
+<div>
+    @* Make sure the enctype is multipart/form-data *@
+    @using (Html.BeginForm("Index", "Files", new { id = Model.Course.CourseId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <p> Upload File</p>
+        <input type="file" id="file" name="file" /><br />
+        <input type="submit" value="Upload" />
+    }
+</div>
+@if (Model.Files.Any())
+{
+<table id="files" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Download link</th>
+            <th>Delete button</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Files)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.ActionLink("Download", "DownLoadFile", new { id = item.FileId })
+                </td>
+                <td>
+                    <button data-file-id="@item.FileId" class="glyphicon glyphicon-trash js-delete">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@*</body>*@
+@*</html>*@
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#files").on("click", ".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this file?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/files/" + button.attr("data-file-id"),
+                            method: "DELETE",
+                            succes: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+}
+
+

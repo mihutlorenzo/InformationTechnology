@@ -37,13 +37,11 @@ namespace EducationalPlatform.Controllers
                 return HttpNotFound();
             }
             var courses = _context.Courses.Where(c => c.TeacherId == teacher.TeacherId).Include(c => c.Specialization).Include(c => c.Semester).Include(C => C.Year).Include(x => x.Projects).ToList();
-            var projects = _context.Projects.Include(p => p.Course).ToList();
 
-            var teacherCoursesProjects = new TeacherCoursesProjectsViewModel()
+            var teacherCoursesProjects = new TeacherCoursesViewModel()
             {
                 Teacher = teacher,
-                Courses = courses,
-                Projects = projects
+                Courses = courses
             };
 
             return View(teacherCoursesProjects);

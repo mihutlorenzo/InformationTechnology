@@ -25,24 +25,11 @@ namespace EducationalPlatform.Controllers
         {
             _context.Dispose();
         }
-
-        // GET: Projects
-        public ActionResult CreateNewProject(int courseId)
-        {
-            var newProject = new Project
-            {
-                CourseId = courseId,
-            };
-
-
-            return View("CreateNewProject", newProject);
-
-
-        }
+        
 
         public ActionResult AddFiles(int id)
         {
-            var project = _context.Projects.SingleOrDefault(c => c.Id == id);
+            var project = _context.Projects.SingleOrDefault(c => c.ProjectId == id);
             if (project == null)
             {
                 return HttpNotFound();
@@ -53,33 +40,11 @@ namespace EducationalPlatform.Controllers
         }
 
 
-        [System.Web.Http.HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Save([FromUri]int courseId, Project newProject)
-        {
-
-            newProject.CourseId = courseId;
-            if (newProject.Id == 0)
-                _context.Projects.Add(newProject);
-            else
-            {
-                var projectInDb = _context.Projects.Single(c => c.Id == newProject.Id);
-                projectInDb.ProjectName = newProject.ProjectName;
-                projectInDb.ProjectDeadline = newProject.ProjectDeadline;
-                projectInDb.CourseId = newProject.CourseId;
-
-            }
-
-            _context.SaveChanges();
-
-
-
-            return RedirectToAction("EditCourse/" + courseId, "Courses");
-        }
+        
 
         public ActionResult UploadFileForProject(int id)
         {
-            var project = _context.Projects.SingleOrDefault(p => p.Id == id);
+            var project = _context.Projects.SingleOrDefault(p => p.ProjectId == id);
 
             return View("UploadFilesForProject", project);
         }
@@ -89,8 +54,8 @@ namespace EducationalPlatform.Controllers
         public ActionResult SaveFileToDatabase(int id, HttpPostedFileBase file)
         {
             int fileSize = file.ContentLength;
-            String FileExt = Path.GetExtension(file.FileName).ToUpper();
-            if (FileExt == ".PDF" || FileExt == ".RAR")
+            string fileExt = Path.GetExtension(file.FileName).ToUpper();
+            if (fileExt == ".PDF" || fileExt == ".RAR" || fileExt == ".ZIP")
             {
                 //get the bytes from the uploaded file
                 byte[] data = GetBytesFromFile(file);
@@ -100,17 +65,13 @@ namespace EducationalPlatform.Controllers
                     ProjectId = id,
                     FileName = file.FileName,
                     FileContent = data,
+                    ContentType = file.ContentType,
                     UploadedDate = DateTime.Now,
                     Size = fileSize
-
-
                 };
                 _context.Files.Add(fileToSave);
                 _context.SaveChanges();
-
-
             }
-
 
             return RedirectToAction("UploadFileForProject/" + id, "Projects");
         }
@@ -179,7 +140,7 @@ namespace EducationalPlatform.Controllers
         public ActionResult StudentProject(string id, int projectId)
         {
             var student = _context.Students.Include(s => s.Projects).SingleOrDefault(s => s.ApplicationUserId == id);
-            var project = _context.Projects.SingleOrDefault(p => p.Id == projectId);
+            var project = _context.Projects.SingleOrDefault(p => p.ProjectId == projectId);
             var filesForProject = _context.Files.Where(f => f.ProjectId == projectId);
             var fileUploadedByStudent = _context.Files.SingleOrDefault(f => f.StudentId == student.StudentId && f.ProjectId == projectId);
             if (!student.Projects.Contains(project))
@@ -200,17 +161,17 @@ namespace EducationalPlatform.Controllers
             return View(studentProjectFiles);
         }
 
-        public ActionResult ViewUploadedProjects(int projectId)
-        {
-            var project = _context.Projects.Include(p => p.Students).SingleOrDefault(p => p.Id == projectId);
-            return View(project);
-        }
+        //public ActionResult ViewUploadedProjects(int projectId)
+        //{
+        //    var project = _context.Projects.Include(p => p.Students).SingleOrDefault(p => p.Id == projectId);
+        //    return View(project);
+        //}
 
 
 
         public FileResult DownLoadFile(int id)
         {
-            var fileSelected = _context.Files.SingleOrDefault(file => file.Id == id);
+            var fileSelected = _context.Files.SingleOrDefault(file => file.FileId == id);
 
             return File(fileSelected.FileContent, "App_Data/pdf", fileSelected.FileName);
         }

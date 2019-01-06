@@ -1,4 +1,4 @@
-﻿@model EducationalPlatform.ViewModels.TeacherCoursesProjectsViewModel
+﻿@model EducationalPlatform.ViewModels.TeacherCoursesViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -6,10 +6,11 @@
 
 <h2>@Html.ActionLink(string.Concat(string.Concat(Model.Teacher.ApplicationUser.FirstName, " "), Model.Teacher.ApplicationUser.LastName), "TeacherProfile", "Teachers", new { id = Model.Teacher.ApplicationUserId }, null)</h2>
 <p>
-    @Html.ActionLink("Add a course", "CreateOrUpdateCourse", "Courses", new { teacherId = Model.Teacher.TeacherId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add new course", "CreateOrUpdateCourse", "Courses", new { teacherId = Model.Teacher.TeacherId }, new { @class = "btn btn-primary" })
 
     @*@Html.ActionLink("Add a project", "CreateProject", "Courses", null, new {@class = "btn btn-primary"})*@
 </p>
+<br />
 @if (!Model.Courses.Any())
 {
     <p>You didn't create a course yet. Click on the button above to create a course.</p>
@@ -31,43 +32,13 @@ else
             @foreach (var course in Model.Courses)
             {
                 <tr>
-                    <td>@Html.ActionLink(course.CourseName, "EditCourse", "Courses", new { id = course.CourseId }, null)</td>
+                    <td>@Html.ActionLink(course.CourseName, "CourseDetails", "Courses", new { id = course.CourseId }, null)</td>
                     <td>@course.Specialization.SpecializationName</td>
                     <td>@course.Semester.SemesterName</td>
                     <td>@course.Year.YearName</td>
                     <td>
                         <button data-course-id="@course.CourseId" class="glyphicon glyphicon-trash js-delete">Delete</button>
                     </td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-
-@if (!Model.Projects.Any())
-{
-    <p>No project created.</p>
-}
-else
-{
-
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Project Name</th>
-                <th>Course Name</th>
-                <th>Deadline</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var project in Model.Projects)
-            {
-                <tr>
-                    <td>@Html.ActionLink(project.ProjectName, "ViewUploadedProjects", "Projects", new { projectId = project.Id }, null)</td>
-                    <td>@project.Course.CourseName</td>
-                    <td>@project.ProjectDeadline</td>
 
                 </tr>
             }

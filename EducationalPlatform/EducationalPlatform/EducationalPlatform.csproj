@@ -201,10 +201,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CoursesController.cs" />
+    <Compile Include="Controllers\Api\FilesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\ProjectsStatementController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -230,6 +233,18 @@
     <Compile Include="Migrations\201812022019420_ChangedColumnNameFromCodes.Designer.cs">
       <DependentUpon>201812022019420_ChangedColumnNameFromCodes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901041646322_AddedContentTypeForFileModel.cs" />
+    <Compile Include="Migrations\201901041646322_AddedContentTypeForFileModel.Designer.cs">
+      <DependentUpon>201901041646322_AddedContentTypeForFileModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901051944198_AddedProjectStatementModelAndChangedProjectModel.cs" />
+    <Compile Include="Migrations\201901051944198_AddedProjectStatementModelAndChangedProjectModel.Designer.cs">
+      <DependentUpon>201901051944198_AddedProjectStatementModelAndChangedProjectModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.cs" />
+    <Compile Include="Migrations\201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.Designer.cs">
+      <DependentUpon>201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Codes.cs" />
@@ -239,6 +254,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectStatement.cs" />
     <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\Specialization.cs" />
     <Compile Include="Models\Student.cs" />
@@ -248,15 +264,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\StudentService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\CourseFilesProjects.cs" />
+    <Compile Include="ViewModels\CourseFilesProjectsViewModel.cs" />
     <Compile Include="ViewModels\CourseFilesViewModel.cs" />
     <Compile Include="ViewModels\CreateCourseViewModel.cs" />
+    <Compile Include="ViewModels\CreateProjectStatementViewModel.cs" />
     <Compile Include="ViewModels\NewRegisterUser.cs" />
+    <Compile Include="ViewModels\ProjectStatementFilesViewModel.cs" />
     <Compile Include="ViewModels\StudentCoursesProjectsViewModel.cs" />
     <Compile Include="ViewModels\StudentCourseViewModel.cs" />
     <Compile Include="ViewModels\StudentProjectFilesViewModel.cs" />
     <Compile Include="ViewModels\StudentSpecializationGroupSemesterYearViewModel.cs" />
-    <Compile Include="ViewModels\TeacherCoursesProjectsViewModel.cs" />
+    <Compile Include="ViewModels\TeacherCoursesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\aspnet-EducationalPlatform-20181125062447.mdf" />
@@ -505,6 +523,11 @@
     <Content Include="Views\Courses\CreateOrUpdateCourse.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Files\FileUpload.cshtml" />
+    <Content Include="Views\ProjectsStatement\CreateOrUpdateProject.cshtml" />
+    <Content Include="Views\Projects\UploadFilesForProject.cshtml" />
+    <Content Include="Views\Courses\CourseDetails.cshtml" />
+    <Content Include="Views\ProjectsStatement\ProjectStatementDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -535,6 +558,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812022019420_ChangedColumnNameFromCodes.resx">
       <DependentUpon>201812022019420_ChangedColumnNameFromCodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901041646322_AddedContentTypeForFileModel.resx">
+      <DependentUpon>201901041646322_AddedContentTypeForFileModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901051944198_AddedProjectStatementModelAndChangedProjectModel.resx">
+      <DependentUpon>201901051944198_AddedProjectStatementModelAndChangedProjectModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.resx">
+      <DependentUpon>201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

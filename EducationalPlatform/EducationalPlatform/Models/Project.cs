@@ -8,27 +8,31 @@ namespace EducationalPlatform.Models
 {
     public class Project
     {
-        public int Id { get; set; }
+        public int ProjectId { get; set; }
 
-        [Required]
-        [MaxLength(255)]
-        [Display(Name = "Name of project")]
-        public string ProjectName { get; set; }
+        public int? ProjectStatementId { get; set; }
+
+        public virtual ProjectStatement ProjectStatement { get; set; }
+
+        public int? StudentId { get; set; }
+
+        public virtual Student Student { get; set; }
+
+        public double? ProjectMark { get; set; }
+
+        public DateTime? UploadedDate { get; set; }
+
         public double? ProjectSize { get; set; }
-        public string ProjectDescription { get; set; }
-        public DateTime? ProjectUploadingDate { get; set; }
 
-        [Required]
-        [Display(Name = "Deadline of project")]
-        public DateTime ProjectDeadline { get; set; }
-        public double? Mark { get; set; }
+        public string AdditionalInfo { get; set; }
 
-        public Nullable<int> CourseId { get; set; }
-        public Course Course { get; set; }
+        public string FileName { get; set; }
 
-        //public Nullable<int> StudentId { get; set; }
-        //public Student StudentThatUpload { get; set; }
-        public ICollection<Student> Students { get; set; }
-        public ICollection<File> Files { get; set; }
+        public double FileSize { get; set; }
+
+        public byte[] FileContent { get; set; }
+
+        public string ContentType { get; set; }
+
     }
 }

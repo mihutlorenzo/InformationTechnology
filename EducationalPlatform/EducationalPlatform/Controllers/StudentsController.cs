@@ -57,15 +57,16 @@ namespace EducationalPlatform.Controllers
             //var studentService = new StudentService();
             //var model = studentService.StudentProfile(student, courses, projects);
 
-            foreach (var course in courses)
-            {
-                var project = projects.SingleOrDefault(p => p.CourseId == course.CourseId);
-                if (project != null)
-                {
-                    projects.Add(project);
-                }
+            //comentat aici
+            //foreach (var course in courses)
+            //{
+            //    var project = projects.SingleOrDefault(p => p.CourseId == course.CourseId);
+            //    if (project != null)
+            //    {
+            //        projects.Add(project);
+            //    }
 
-            }
+            //}
 
             var studentCoursesProjects = new StudentCoursesProjectsViewModel
             {

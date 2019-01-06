@@ -40,8 +40,8 @@ namespace EducationalPlatform.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Project> Projects { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
@@ -50,6 +50,7 @@ namespace EducationalPlatform.Models
         public DbSet<Year> Years { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<ProjectStatement> ProjectsStatement { get; set; }
 
 
         public ApplicationDbContext()

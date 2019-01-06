@@ -1,0 +1,73 @@
+﻿@model EducationalPlatform.ViewModels.ProjectStatementFilesViewModel
+@{
+    ViewBag.Title = "ProjectStatementDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul>
+    <li>Project name: @Model.ProjectStatement.ProjectName</li>
+    <li>Project description: @Model.ProjectStatement.ProjectDescription</li>
+    <li>Course summary: @Model.ProjectStatement.ProjectMaxSize</li>
+    <li>Course specialization: @Model.ProjectStatement.ProjectDeadline</li>
+    <li>Course semester: @Model.ProjectStatement.ProjectCreationDate</li>
+</ul>
+
+<h4>@Html.ActionLink("Click on this link to edit this project", "EditProjectStatement", "ProjectsStatement", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
+
+@if (Model.Files.Any())
+{
+    <table id="files" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>File name</th>
+                <th>Download link</th>
+                <th>Delete button</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Files)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Download", "DownLoadFile", "Files", new { id = item.FileId }, null)
+                    </td>
+                    <td>
+                        <button data-file-id="@item.FileId" class="glyphicon glyphicon-trash js-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4>@Html.ActionLink("Click on this link to add files to this project", "AddFileForProject", "Files", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
+
+<h4>@Html.ActionLink("Click on this link to view the student's uploaded projects", "", "Projects", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#files").on("click", ".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this file?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/files/" + button.attr("data-file-id"),
+                            method: "DELETE",
+                            succes: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+}
+

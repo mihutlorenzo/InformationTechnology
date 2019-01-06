@@ -30,22 +30,23 @@ namespace EducationalPlatform.Controllers
             var student = _context.Students.Include(s => s.ApplicationUser).SingleOrDefault(s => s.ApplicationUserId == studentId);
             var course = _context.Courses.Include(c => c.Teacher.ApplicationUser).Include(c => c.Students).Include(c => c.Specialization).Include(c => c.Semester).Include(c => c.Year).SingleOrDefault(c => c.CourseId == id);
             var files = _context.Files.Where(f => f.CourseId == id).ToList();
-            var projects = _context.Projects.Where(p => p.CourseId == id).ToList();
+            
+            var projects = _context.ProjectsStatement.Where(p => p.CourseId == id).ToList();
 
             if (course.Students.Contains(student))
             {
-                var courseFilesProjects = new CourseFilesProjects
+                var courseFilesProjects = new CourseFilesProjectsViewModel
                 {
                     Student = student,
                     Course = course,
                     Files = files,
-                    Projects = projects
+                    ProjectsStatement = projects
                 };
                 return View(courseFilesProjects);
             }
             else
             {
-                var courseFilesProjects = new CourseFilesProjects
+                var courseFilesProjects = new CourseFilesProjectsViewModel
                 {
                     Student = student,
                     Course = course,
@@ -75,20 +76,28 @@ namespace EducationalPlatform.Controllers
 
         }
 
-        //public ActionResult Details(int id)
-        //{
-        //    var course = _context.Courses.SingleOrDefault(c => c.CourseId == id);
 
-        //    if(course == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    return View(course);
-        //}
-        public ActionResult Details(int id)
+        public ActionResult CourseDetails(int id)
         {
-            throw new NotImplementedException();
+            var course = _context.Courses.Include(c => c.Specialization).Include(c => c.Semester).Include(c => c.Year).SingleOrDefault(c => c.CourseId == id);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+
+            var teacher = _context.Teachers.Include(t => t.ApplicationUser).SingleOrDefault(t => t.TeacherId == course.TeacherId);
+
+            var files = _context.Files.Where(f => f.CourseId == id).ToList();
+
+            var projectsCreatedByTeacher = _context.ProjectsStatement.Where(p => p.CourseId == id).ToList();
+            var courseFilesProjects = new CourseFilesProjectsViewModel
+            {
+                Teacher = teacher,
+                Course = course,
+                Files = files,
+                ProjectsStatement = projectsCreatedByTeacher
+            };
+            return View("CourseDetails", courseFilesProjects);
         }
 
 
@@ -114,7 +123,7 @@ namespace EducationalPlatform.Controllers
 
             var teacher = _context.Teachers.SingleOrDefault(t => t.TeacherId == id);
 
-            return RedirectToAction("Index/" + teacher.ApplicationUserId, "Teachers");
+            return RedirectToAction("CourseDetails/" + course.CourseId, "Courses");
         }
 
 
@@ -126,11 +135,9 @@ namespace EducationalPlatform.Controllers
                 return HttpNotFound();
             }
 
-
             var specialization = _context.Specializations.ToList();
             var semester = _context.Semesters.ToList();
             var year = _context.Years.ToList();
-            var project = _context.Projects.Where(p => p.CourseId == id).ToList();
 
             if (specialization == null || semester == null || year == null)
             {
@@ -144,17 +151,12 @@ namespace EducationalPlatform.Controllers
                 Specializations = specialization,
                 Semesters = semester,
                 Years = year,
-                Course = course,
-                Projects = project
-
+                Course = course
             };
-
 
             return View("CreateOrUpdateCourse", createNewCourse);
 
         }
-
-
 
         public ActionResult CreateOrUpdateCourse(int? teacherId)
         {

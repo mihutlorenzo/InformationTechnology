@@ -1,0 +1,103 @@
+﻿@model EducationalPlatform.ViewModels.CourseFilesProjectsViewModel
+@{
+    ViewBag.Title = "CourseDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul>
+    <li>Course name: @Model.Course.CourseName</li>
+    <li>Course teacher: @Model.Teacher.ApplicationUser.FirstName @Model.Teacher.ApplicationUser.LastName</li>
+    @if (Model.Teacher.URIToPersonalPage != null)
+    {
+        <li>Teacher persoanl page: <a href="@Model.Teacher.URIToPersonalPage">@Model.Teacher.URIToPersonalPage</a></li>
+
+    }
+    <li>Course summary: @Model.Course.CourseDescription</li>
+    <li>Course specialization: @Model.Course.Specialization.SpecializationName</li>
+    <li>Course semester: @Model.Course.Semester.SemesterName</li>
+    <li>Course year: @Model.Course.Year.YearName</li>
+</ul>
+
+<h4>@Html.ActionLink("Click on this link to edit this course", "EditCourse", "Courses", new { id = Model.Course.CourseId }, null)</h4>
+
+@if (Model.Files.Any())
+{
+    <table id="files" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>File name</th>
+                <th>Download link</th>
+                <th>Delete button</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Files)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Download", "DownLoadFile", "Files", new { id = item.FileId }, null)
+                    </td>
+                    <td>
+                        <button data-file-id="@item.FileId" class="glyphicon glyphicon-trash js-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4>@Html.ActionLink("Click on this link to add files to this course", "Index", "Files", new { id = Model.Course.CourseId }, null)</h4>
+
+@if (Model.ProjectsStatement.Any())
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Course Name</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.ProjectsStatement)
+            {
+                <tr>
+                    <td>@Html.ActionLink(project.ProjectName, "ProjectStatementDetails", "ProjectsStatement", new { projectStatementId = project.ProjectStatementId }, null)</td>
+                    <td>@project.Course.CourseName</td>
+                    <td>@project.ProjectDeadline</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4>@Html.ActionLink("Click on this link to add a new project to this course", "CreateNewProject", "ProjectsStatement", new { id = Model.Course.CourseId }, null)</h4>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#files").on("click", ".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this file?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/files/" + button.attr("data-file-id"),
+                            method: "DELETE",
+                            succes: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+}
+
