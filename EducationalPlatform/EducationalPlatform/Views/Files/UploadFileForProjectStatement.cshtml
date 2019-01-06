@@ -1,0 +1,16 @@
+﻿@model EducationalPlatform.Models.ProjectStatement
+@{
+    ViewBag.Title = "UploadFileForProjectStatement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @* Make sure the enctype is multipart/form-data *@
+    @using (Html.BeginForm("UploadFileForProjectStatement", "Files", new { id = Model.ProjectStatementId}, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <p> Upload File</p>
+        <input type="file" id="file" name="file" /><br />
+        <input type="submit" value="Upload" />
+    }
+</div>
+

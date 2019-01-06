@@ -37,6 +37,13 @@ namespace EducationalPlatform.Controllers
             return View("FileUpload", courseFiles);
         }
 
+        public ActionResult AddFileForProjectStatement(int id)
+        {
+            var projectStatement = _context.ProjectsStatement.SingleOrDefault(p => p.ProjectStatementId == id);
+
+            return View("UploadFileForProjectStatement", projectStatement);
+        }
+
         [HttpGet]
         public FileResult DownLoadFile(int id)
         {
@@ -81,6 +88,34 @@ namespace EducationalPlatform.Controllers
             }
 
             return RedirectToAction("CourseDetails/" + id, "Courses");
+        }
+
+        [HttpPost]
+        public ActionResult UploadFileForProjectStatement(int id, HttpPostedFileBase file)
+        {
+            int fileSize = file.ContentLength;
+            string fileExt = Path.GetExtension(file.FileName).ToUpper();
+            if (fileExt == ".PDF" || fileExt == ".RAR" || fileExt == ".ZIP")
+            {
+                //get the bytes from the uploaded file
+                byte[] data = GetBytesFromFile(file);
+
+                var fileToSave = new Models.File
+                {
+                    ProjectStatementId = id,
+                    FileName = file.FileName,
+                    FileContent = data,
+                    ContentType = file.ContentType,
+                    UploadedDate = DateTime.Now,
+                    Size = fileSize
+
+
+                };
+                _context.Files.Add(fileToSave);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("ProjectStatementDetails/" + id, "ProjectsStatement");
         }
 
         private byte[] GetBytesFromFile(HttpPostedFileBase file)

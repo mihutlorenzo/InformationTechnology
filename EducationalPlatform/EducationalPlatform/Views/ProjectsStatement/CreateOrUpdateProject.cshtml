@@ -8,7 +8,7 @@
 <h2>Create course</h2>
 
 
-@using (Html.BeginForm("Save", "Projects", new { id = Model.CourseId }, FormMethod.Post, null))
+@using (Html.BeginForm("Save", "ProjectsStatement", new { id = Model.CourseId }, FormMethod.Post, null))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.ProjectStatement.ProjectName)  

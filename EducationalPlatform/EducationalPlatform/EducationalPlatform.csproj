@@ -213,37 +213,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811251818023_AddModels.cs" />
-    <Compile Include="Migrations\201811251818023_AddModels.Designer.cs">
-      <DependentUpon>201811251818023_AddModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811251820393_AddRegister.cs" />
-    <Compile Include="Migrations\201811251820393_AddRegister.Designer.cs">
-      <DependentUpon>201811251820393_AddRegister.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811251958025_UpdateIdentityModels.cs" />
-    <Compile Include="Migrations\201811251958025_UpdateIdentityModels.Designer.cs">
-      <DependentUpon>201811251958025_UpdateIdentityModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812021628234_Changed_Semester_Year_Added_Group.cs" />
-    <Compile Include="Migrations\201812021628234_Changed_Semester_Year_Added_Group.Designer.cs">
-      <DependentUpon>201812021628234_Changed_Semester_Year_Added_Group.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812022019420_ChangedColumnNameFromCodes.cs" />
-    <Compile Include="Migrations\201812022019420_ChangedColumnNameFromCodes.Designer.cs">
-      <DependentUpon>201812022019420_ChangedColumnNameFromCodes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901041646322_AddedContentTypeForFileModel.cs" />
-    <Compile Include="Migrations\201901041646322_AddedContentTypeForFileModel.Designer.cs">
-      <DependentUpon>201901041646322_AddedContentTypeForFileModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901051944198_AddedProjectStatementModelAndChangedProjectModel.cs" />
-    <Compile Include="Migrations\201901051944198_AddedProjectStatementModelAndChangedProjectModel.Designer.cs">
-      <DependentUpon>201901051944198_AddedProjectStatementModelAndChangedProjectModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.cs" />
-    <Compile Include="Migrations\201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.Designer.cs">
-      <DependentUpon>201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.cs</DependentUpon>
+    <Compile Include="Migrations\201901061729057_FirstMigration.cs" />
+    <Compile Include="Migrations\201901061729057_FirstMigration.Designer.cs">
+      <DependentUpon>201901061729057_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -277,10 +249,6 @@
     <Compile Include="ViewModels\TeacherCoursesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-EducationalPlatform-20181125062447.mdf" />
-    <Content Include="App_Data\aspnet-EducationalPlatform-20181125062447_log.ldf">
-      <DependentUpon>aspnet-EducationalPlatform-20181125062447.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -528,8 +496,11 @@
     <Content Include="Views\Projects\UploadFilesForProject.cshtml" />
     <Content Include="Views\Courses\CourseDetails.cshtml" />
     <Content Include="Views\ProjectsStatement\ProjectStatementDetails.cshtml" />
+    <Content Include="Views\Files\UploadFileForProjectStatement.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
@@ -544,29 +515,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811251818023_AddModels.resx">
-      <DependentUpon>201811251818023_AddModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811251820393_AddRegister.resx">
-      <DependentUpon>201811251820393_AddRegister.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811251958025_UpdateIdentityModels.resx">
-      <DependentUpon>201811251958025_UpdateIdentityModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812021628234_Changed_Semester_Year_Added_Group.resx">
-      <DependentUpon>201812021628234_Changed_Semester_Year_Added_Group.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812022019420_ChangedColumnNameFromCodes.resx">
-      <DependentUpon>201812022019420_ChangedColumnNameFromCodes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901041646322_AddedContentTypeForFileModel.resx">
-      <DependentUpon>201901041646322_AddedContentTypeForFileModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901051944198_AddedProjectStatementModelAndChangedProjectModel.resx">
-      <DependentUpon>201901051944198_AddedProjectStatementModelAndChangedProjectModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.resx">
-      <DependentUpon>201901061120114_ChangedTheNameOfPrimaryKeyForProjectAndProjectStatement.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901061729057_FirstMigration.resx">
+      <DependentUpon>201901061729057_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

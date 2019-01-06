@@ -7,13 +7,13 @@ namespace EducationalPlatform.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedProjectStatementModelAndChangedProjectModel : IMigrationMetadata
+    public sealed partial class FirstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedProjectStatementModelAndChangedProjectModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201901051944198_AddedProjectStatementModelAndChangedProjectModel"; }
+            get { return "201901061729057_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

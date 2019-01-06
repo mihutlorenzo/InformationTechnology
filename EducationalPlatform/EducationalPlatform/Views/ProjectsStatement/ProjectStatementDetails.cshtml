@@ -7,9 +7,9 @@
 <ul>
     <li>Project name: @Model.ProjectStatement.ProjectName</li>
     <li>Project description: @Model.ProjectStatement.ProjectDescription</li>
-    <li>Course summary: @Model.ProjectStatement.ProjectMaxSize</li>
-    <li>Course specialization: @Model.ProjectStatement.ProjectDeadline</li>
-    <li>Course semester: @Model.ProjectStatement.ProjectCreationDate</li>
+    <li>Project maximum size: @Model.ProjectStatement.ProjectMaxSize MB</li>
+    <li>Project deadline: @Model.ProjectStatement.ProjectDeadline</li>
+    <li>Project creation date: @Model.ProjectStatement.ProjectCreationDate</li>
 </ul>
 
 <h4>@Html.ActionLink("Click on this link to edit this project", "EditProjectStatement", "ProjectsStatement", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
@@ -43,7 +43,7 @@
     </table>
 }
 
-<h4>@Html.ActionLink("Click on this link to add files to this project", "AddFileForProject", "Files", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
+<h4>@Html.ActionLink("Click on this link to add file to this project", "AddFileForProjectStatement", "Files", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
 
 <h4>@Html.ActionLink("Click on this link to view the student's uploaded projects", "", "Projects", new { id = Model.ProjectStatement.ProjectStatementId }, null)</h4>
 

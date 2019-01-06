@@ -61,18 +61,18 @@ namespace EducationalPlatform.Controllers
                 projectInDb.ProjectDeadline = projectStatement.ProjectDeadline;
             }
             _context.SaveChanges();
-            return RedirectToAction("CourseDetails/" + id, "Courses");
+            return RedirectToAction("ProjectStatementDetails/" + id, "ProjectsStatement");
         }
 
-        public ActionResult ProjectStatementDetails(int projectStatementId)
+        public ActionResult ProjectStatementDetails(int id)
         {
-            var projectStatement = _context.ProjectsStatement.Include(p => p.Course).SingleOrDefault(p => p.ProjectStatementId == projectStatementId);
+            var projectStatement = _context.ProjectsStatement.Include(p => p.Course).SingleOrDefault(p => p.ProjectStatementId == id);
             if (projectStatement == null)
             {
                 return HttpNotFound();
             }
 
-            var files = _context.Files.Where(f => f.ProjectStatementId == projectStatementId).ToList();
+            var files = _context.Files.Where(f => f.ProjectStatementId == id).ToList();
             
             var projectStatementFiles = new ProjectStatementFilesViewModel
             {
@@ -80,6 +80,25 @@ namespace EducationalPlatform.Controllers
                 Files = files
             };
             return View("ProjectStatementDetails", projectStatementFiles);
+        }
+
+        public ActionResult EditProjectStatement(int id)
+        {
+            var projectStatement = _context.ProjectsStatement.SingleOrDefault(c => c.ProjectStatementId == id);
+            if (projectStatement == null)
+            {
+                return HttpNotFound();
+            }
+
+            var updateProjectStatement = new CreateProjectStatementViewModel
+            {
+                CourseId = projectStatement.CourseId,
+                ProjectDeadline = projectStatement.ProjectDeadline,
+                ProjectStatement = projectStatement
+            };
+
+            return View("CreateOrUpdateProject", updateProjectStatement);
+
         }
     }
 }

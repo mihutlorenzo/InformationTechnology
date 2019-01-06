@@ -65,7 +65,7 @@
             @foreach (var project in Model.ProjectsStatement)
             {
                 <tr>
-                    <td>@Html.ActionLink(project.ProjectName, "ProjectStatementDetails", "ProjectsStatement", new { projectStatementId = project.ProjectStatementId }, null)</td>
+                    <td>@Html.ActionLink(project.ProjectName, "ProjectStatementDetails", "ProjectsStatement", new { id = project.ProjectStatementId }, null)</td>
                     <td>@project.Course.CourseName</td>
                     <td>@project.ProjectDeadline</td>
 
