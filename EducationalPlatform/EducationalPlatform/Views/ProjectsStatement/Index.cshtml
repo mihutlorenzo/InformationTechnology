@@ -1,0 +1,88 @@
+﻿@model EducationalPlatform.ViewModels.ProjectStatementFilesViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.ProjectStatement.ProjectName</h2>
+
+@if (Model.Files.Any())
+{
+    <table class="table table-bordered">
+        <tr>
+            <th class="col-md-4">
+                @*@Html.DisplayNameFor(model => model.Files.FileName)*@
+            </th>
+
+            <th class="col-md-2"></th>
+        </tr>
+
+        @foreach (var item in Model.Files)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Download", "DownLoadFile", "Files","", new { id = item.FileId })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+    <ul>
+        <li>Project Deadline @Model.ProjectStatement.ProjectDeadline</li>
+        <li>Project Creation Date: @Model.ProjectStatement.ProjectCreationDate</li>
+        <li>Project Max Size: @Model.ProjectStatement.ProjectMaxSize</li>
+        @if (Model.ProjectStatement.Files != null)
+    {
+        <li>File size: @Model.ProjectStatement.Files</li>
+        @*<li>File uploading date: @Model.StudentUploadedFile.UploadedDate</li>*@
+}
+
+
+    </ul>
+
+<div>
+    @* Make sure the enctype is multipart/form-data *@
+    @using (Html.BeginForm("SaveFileToDatabaseForStudent", "Projects", new { @*id = Model.Student.StudentId,*@ projectId = Model.ProjectStatement.ProjectStatementId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <p> Upload File</p>
+        <input type="file" id="file" name="file" /><br />
+        <input type="submit" value="Save" />
+    }
+</div>
+
+
+@*@if (Model.ProjectStatement.Files != null)
+{
+    <table class="table table-bordered">
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(model => model.Files.FileName)
+            </th>
+
+            <th class="col-md-2"></th>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ProjectStatement.Files)
+            </td>
+
+            <td>
+                @Html.ActionLink("Download", "DownLoadFile","Files","", new { id = Model.ProjectStatement.ProjectStatementId })
+
+            </td>
+        </tr>
+
+
+    </table>
+}*@
+

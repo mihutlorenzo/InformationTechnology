@@ -25,9 +25,20 @@ namespace EducationalPlatform.Controllers
         }
 
         // GET: ProjectsStatement
-        public ActionResult Index()
+        [System.Web.Http.HttpGet]
+        public ActionResult Index(int projectId)
         {
-            return View();
+          
+            var projectStatement = _context.ProjectsStatement.Include(c=>c.Course).SingleOrDefault(c => c.ProjectStatementId == projectId);
+
+            var files = _context.Files.Where(f => f.ProjectStatementId == projectId).Include(p =>p.ProjectStatement).ToList();
+
+            var project = new ProjectStatementFilesViewModel()
+            {
+                ProjectStatement = projectStatement,
+                Files = files
+            };
+            return View("Index", project);
         }
 
         public ActionResult CreateNewProject(int? id)
