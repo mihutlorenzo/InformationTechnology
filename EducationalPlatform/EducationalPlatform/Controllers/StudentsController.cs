@@ -52,7 +52,7 @@ namespace EducationalPlatform.Controllers
             }
 
             var courses = _context.Students.Where(s => s.StudentId == student.StudentId).SelectMany(c => c.Courses).Include(c => c.Teacher.ApplicationUser).Include(s => s.Specialization).Include(s => s.Semester).Include(s => s.Year).ToList();
-            var projects = _context.Projects.ToList();
+            //var projects = _context.Projects.ToList();
 
             //var studentService = new StudentService();
             //var model = studentService.StudentProfile(student, courses, projects);
@@ -72,7 +72,7 @@ namespace EducationalPlatform.Controllers
             {
                 Student = student,
                 Courses = courses,
-                Projects = projects
+               // Projects = projects
             };
 
             return View("StudentProfile", studentCoursesProjects);
