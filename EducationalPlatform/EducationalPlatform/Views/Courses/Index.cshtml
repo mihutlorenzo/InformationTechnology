@@ -55,13 +55,13 @@ else
 }
 
 
-@*@if (Model.Projects == null)
+@if (Model.ProjectsStatement == null)
 {
     <p>You have to be registered to this course in order to have access to the project section.</p>
 }
 else
 {
-    if (!Model.Projects.Any())
+    if (!Model.ProjectsStatement.Any())
     {
         <p>There are no projects available for this course.</p>
     }
@@ -69,10 +69,10 @@ else
     {
         <h3>Projects</h3>
         <ul>
-            @foreach (var project in Model.Projects)
+            @foreach (var project in Model.ProjectsStatement)
             {
-                <li>@Html.ActionLink(project.ProjectName, "StudentProject", "Projects", new { id = Model.Student.ApplicationUserId, projectId = project.Id }, null)</li>
+                <li>@Html.ActionLink(project.ProjectName, "Index", "ProjectsStatement", new { id = Model.Student.ApplicationUserId, projectId = project.ProjectStatementId }, null)</li>
             }
         </ul>
     }
-}*@
+}
