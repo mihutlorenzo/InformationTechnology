@@ -25,7 +25,7 @@ namespace EducationalPlatform.Controllers
         {
             _context.Dispose();
         }
-        
+
 
         public ActionResult AddFiles(int id)
         {
@@ -39,8 +39,46 @@ namespace EducationalPlatform.Controllers
 
         }
 
+        public ActionResult StudentsProjects(int id)
+        {
+            var projectStatement = _context.ProjectsStatement.SingleOrDefault(p => p.ProjectStatementId == id);
+            var projects = _context.Projects.Include(p => p.Student.ApplicationUser).Where(p => p.ProjectStatementId == id).ToList();
 
-        
+            if (projectStatement == null)
+                return HttpNotFound();
+
+            StudentsProjectStatementProjectsViewModel viewModelToReturn = new StudentsProjectStatementProjectsViewModel
+            {
+                ProjectStatement = projectStatement,
+                Projects = projects
+            };
+
+
+            return View("StudentsProjects", viewModelToReturn);
+        }
+
+        public ActionResult ProjectDetails(int id)
+        {
+            var project = _context.Projects.Include(p => p.Student.ApplicationUser).SingleOrDefault(p => p.ProjectId == id);
+
+            if (project == null)
+                return HttpNotFound();
+
+            return View("ProjectDetails", project);
+        }
+
+        [System.Web.Http.HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(int id, Project project)
+        {
+            var projectInDb = _context.Projects.SingleOrDefault(c => c.ProjectId == id);
+            projectInDb.ProjectMark = project.ProjectMark;
+            _context.SaveChanges();
+
+            return RedirectToAction("StudentsProjects/" + projectInDb.ProjectStatementId, "Projects");
+        }
+
+
 
         public ActionResult UploadFileForProject(int id)
         {
@@ -77,49 +115,61 @@ namespace EducationalPlatform.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult SaveFileToDatabaseForStudent(int id, int projectId, HttpPostedFileBase file)
+        public ActionResult CreateOrUpdateProjectForStudent(int id, int projectStatementId, HttpPostedFileBase file, Project project)
         {
-            int fileSize = file.ContentLength;
-            String FileExt = Path.GetExtension(file.FileName).ToUpper();
-            if (FileExt == ".RAR")
+            
+            if (project.ProjectId == 0)
             {
-                //get the bytes from the uploaded file
-                byte[] data = GetBytesFromFile(file);
+                project.StudentId = id;
+                project.ProjectStatementId = projectStatementId;
 
-
-                var projectFileDB = _context.Files.FirstOrDefault(f => f.ProjectId == projectId && f.StudentId == id);
-                if (projectFileDB == null)
+                if (file != null)
                 {
-                    var fileToSave = new Models.File
+                    int fileSize = file.ContentLength;
+                    string fileExt = Path.GetExtension(file.FileName).ToUpper();
+                    if (fileExt == ".RAR" || fileExt == ".ZIP")
                     {
-                        ProjectId = projectId,
-                        StudentId = id,
-                        FileName = file.FileName,
-                        FileContent = data,
-                        UploadedDate = DateTime.Now,
-                        Size = fileSize
+                        //get the bytes from the uploaded file
+                        byte[] data = GetBytesFromFile(file);
 
-
-                    };
-                    _context.Files.Add(fileToSave);
+                        project.FileName = file.FileName;
+                        project.FileContent = data;
+                        project.ContentType = file.ContentType;
+                        project.UploadedDate = DateTime.Now;
+                        project.FileSize = fileSize;
+                    }
                 }
-                else
-                {
-                    projectFileDB.FileName = file.FileName;
-                    projectFileDB.FileContent = data;
-                    projectFileDB.UploadedDate = DateTime.Now;
-                    projectFileDB.Size = fileSize;
-                }
-
-                _context.SaveChanges();
-
-
+                _context.Projects.Add(project);
             }
-            var student = _context.Students.SingleOrDefault(s => s.StudentId == id);
-            var values = new RouteValueDictionary();
-            values.Add("projectId", projectId);
-            values.Add("id", student.ApplicationUserId);
-            return RedirectToAction("StudentProject", values);
+            else
+            {
+                var projectInDb = _context.Projects.SingleOrDefault(p => p.ProjectId == project.ProjectId);
+                projectInDb.AdditionalInfo = project.AdditionalInfo;
+                if(file != null)
+                {
+                    int fileSize = file.ContentLength;
+                    string fileExt = Path.GetExtension(file.FileName).ToUpper();
+                    if (fileExt == ".RAR" || fileExt == ".ZIP")
+                    {
+                        //get the bytes from the uploaded file
+                        byte[] data = GetBytesFromFile(file);
+
+                        projectInDb.FileName = file.FileName;
+                        projectInDb.FileContent = data;
+                        projectInDb.ContentType = file.ContentType;
+                        projectInDb.UploadedDate = DateTime.Now;
+                        projectInDb.FileSize = fileSize;
+                    }
+                }
+            }
+            _context.SaveChanges();
+
+            var routeValues = new RouteValueDictionary
+            {
+                { "id", id },
+                { "projectId", projectStatementId }
+            };
+            return RedirectToAction("Index" , "ProjectsStatement", routeValues);
         }
 
         private byte[] GetBytesFromFile(HttpPostedFileBase file)
@@ -169,11 +219,12 @@ namespace EducationalPlatform.Controllers
 
 
 
+        [System.Web.Http.HttpGet]
         public FileResult DownLoadFile(int id)
         {
-            var fileSelected = _context.Files.SingleOrDefault(file => file.FileId == id);
-
-            return File(fileSelected.FileContent, "App_Data/pdf", fileSelected.FileName);
+            var projectFromDb = _context.Projects.SingleOrDefault(file => file.ProjectId == id);
+            byte[] bytes = (byte[])projectFromDb.FileContent;
+            return File(bytes, projectFromDb.ContentType, projectFromDb.FileName);
         }
 
     }

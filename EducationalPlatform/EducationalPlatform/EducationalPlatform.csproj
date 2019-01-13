@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201901061729057_FirstMigration.Designer.cs">
       <DependentUpon>201901061729057_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901130935153_RemovedProjectSizeAttributeFromProjectModel.cs" />
+    <Compile Include="Migrations\201901130935153_RemovedProjectSizeAttributeFromProjectModel.Designer.cs">
+      <DependentUpon>201901130935153_RemovedProjectSizeAttributeFromProjectModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Codes.cs" />
@@ -241,11 +245,13 @@
     <Compile Include="ViewModels\CreateCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateProjectStatementViewModel.cs" />
     <Compile Include="ViewModels\NewRegisterUser.cs" />
+    <Compile Include="ViewModels\ProjectStatementFilesProjectViewModel.cs" />
     <Compile Include="ViewModels\ProjectStatementFilesViewModel.cs" />
     <Compile Include="ViewModels\StudentCoursesProjectsViewModel.cs" />
     <Compile Include="ViewModels\StudentCourseViewModel.cs" />
     <Compile Include="ViewModels\StudentProjectFilesViewModel.cs" />
     <Compile Include="ViewModels\StudentSpecializationGroupSemesterYearViewModel.cs" />
+    <Compile Include="ViewModels\StudentsProjectStatementProjectsViewModel.cs" />
     <Compile Include="ViewModels\TeacherCoursesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -498,6 +504,8 @@
     <Content Include="Views\ProjectsStatement\ProjectStatementDetails.cshtml" />
     <Content Include="Views\Files\UploadFileForProjectStatement.cshtml" />
     <Content Include="Views\ProjectsStatement\Index.cshtml" />
+    <Content Include="Views\Projects\StudentsProjects.cshtml" />
+    <Content Include="Views\Projects\ProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -518,6 +526,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901061729057_FirstMigration.resx">
       <DependentUpon>201901061729057_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901130935153_RemovedProjectSizeAttributeFromProjectModel.resx">
+      <DependentUpon>201901130935153_RemovedProjectSizeAttributeFromProjectModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

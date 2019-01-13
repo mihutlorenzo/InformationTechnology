@@ -22,8 +22,6 @@ namespace EducationalPlatform.Models
 
         public DateTime? UploadedDate { get; set; }
 
-        public double? ProjectSize { get; set; }
-
         public string AdditionalInfo { get; set; }
 
         public string FileName { get; set; }

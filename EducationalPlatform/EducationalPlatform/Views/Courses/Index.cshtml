@@ -71,7 +71,7 @@ else
         <ul>
             @foreach (var project in Model.ProjectsStatement)
             {
-                <li>@Html.ActionLink(project.ProjectName, "Index", "ProjectsStatement", new { id = Model.Student.ApplicationUserId, projectId = project.ProjectStatementId }, null)</li>
+                <li>@Html.ActionLink(project.ProjectName, "Index", "ProjectsStatement", new { id = Model.Student.StudentId, projectId = project.ProjectStatementId }, null)</li>
             }
         </ul>
     }

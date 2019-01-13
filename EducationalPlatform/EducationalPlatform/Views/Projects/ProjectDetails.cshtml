@@ -1,0 +1,26 @@
+﻿@model EducationalPlatform.Models.Project
+@{
+    ViewBag.Title = "ProjectDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul>
+    <li>Student name: @string.Concat(Model.Student.ApplicationUser.FirstName, " ", Model.Student.ApplicationUser.LastName)</li>
+    <li>Uploaded date: @Model.UploadedDate</li>
+    <li>Additional Information: @Model.AdditionalInfo</li>
+    <li>File name:  @Html.ActionLink(Model.FileName, "DownLoadFile", "Projects", new { id = Model.ProjectId }, null)</li>
+    <li>File size: @Model.FileSize MB</li>
+</ul>
+
+@using (Html.BeginForm("Save", "Projects", new { id = Model.ProjectId }, FormMethod.Post, null))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProjectMark)
+        @Html.TextBoxFor(m => m.ProjectMark, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ProjectMark)
+    </div>
+    @Html.HiddenFor(m => m.ProjectId)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

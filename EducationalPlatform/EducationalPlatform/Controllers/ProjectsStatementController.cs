@@ -26,19 +26,41 @@ namespace EducationalPlatform.Controllers
 
         // GET: ProjectsStatement
         [System.Web.Http.HttpGet]
-        public ActionResult Index(int projectId)
+        public ActionResult Index(int id,int projectId)
         {
           
             var projectStatement = _context.ProjectsStatement.Include(c=>c.Course).SingleOrDefault(c => c.ProjectStatementId == projectId);
 
+            var student = _context.Students.SingleOrDefault(s => s.StudentId == id);
+
+            if (projectStatement == null || student == null)
+                return HttpNotFound();
+
             var files = _context.Files.Where(f => f.ProjectStatementId == projectId).Include(p =>p.ProjectStatement).ToList();
 
-            var project = new ProjectStatementFilesViewModel()
+            var project = _context.Projects.SingleOrDefault(p => p.StudentId == id);
+
+            if(project == null)
             {
-                ProjectStatement = projectStatement,
-                Files = files
-            };
-            return View("Index", project);
+                var projectstatementFilesProjectViewModel = new ProjectStatementFilesProjectViewModel()
+                {
+                    ProjectStatement = projectStatement,
+                    Files = files,
+                    Student = student
+                };
+                return View("Index", projectstatementFilesProjectViewModel);
+            }
+            else
+            {
+                var projectstatementFilesProjectViewModel = new ProjectStatementFilesProjectViewModel()
+                {
+                    ProjectStatement = projectStatement,
+                    Files = files,
+                    Project = project, 
+                    Student = student
+                };
+                return View("Index", projectstatementFilesProjectViewModel);
+            }
         }
 
         public ActionResult CreateNewProject(int? id)

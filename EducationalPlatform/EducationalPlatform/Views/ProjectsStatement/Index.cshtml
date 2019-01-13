@@ -1,4 +1,4 @@
-﻿@model EducationalPlatform.ViewModels.ProjectStatementFilesViewModel
+﻿@model EducationalPlatform.ViewModels.ProjectStatementFilesProjectViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -11,11 +11,8 @@
 {
     <table class="table table-bordered">
         <tr>
-            <th class="col-md-4">
-                @*@Html.DisplayNameFor(model => model.Files.FileName)*@
-            </th>
-
-            <th class="col-md-2"></th>
+            <th>Project recources</th>
+            <th>Download  button</th>
         </tr>
 
         @foreach (var item in Model.Files)
@@ -26,63 +23,43 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Download", "DownLoadFile", "Files","", new { id = item.FileId })
-
+                    @Html.ActionLink("Download", "DownLoadFile", "Files", new { id = item.FileId }, null)
                 </td>
             </tr>
         }
-
     </table>
 }
 
-    <ul>
-        <li>Project Deadline @Model.ProjectStatement.ProjectDeadline</li>
-        <li>Project Creation Date: @Model.ProjectStatement.ProjectCreationDate</li>
-        <li>Project Max Size: @Model.ProjectStatement.ProjectMaxSize</li>
-        @if (Model.ProjectStatement.Files != null)
-    {
-        <li>File size: @Model.ProjectStatement.Files</li>
-        @*<li>File uploading date: @Model.StudentUploadedFile.UploadedDate</li>*@
+<ul>
+    <li>Course Name: @Model.ProjectStatement.Course.CourseName</li>
+    <li>Project Description: @Model.ProjectStatement.ProjectDescription</li>
+    <li>Project Deadline: @Model.ProjectStatement.ProjectDeadline</li>
+    <li>Project Max Size: @Model.ProjectStatement.ProjectMaxSize</li>
+</ul>
+
+@if (Model.Project != null)
+{
+    <h4>@Html.ActionLink(Model.Project.FileName, "DownLoadFile", "Projects", new { id = Model.Project.ProjectId }, null)</h4>
+    <h4><b>Project description:</b> @Model.Project.AdditionalInfo</h4>
 }
 
-
-    </ul>
 
 <div>
-    @* Make sure the enctype is multipart/form-data *@
-    @using (Html.BeginForm("SaveFileToDatabaseForStudent", "Projects", new { @*id = Model.Student.StudentId,*@ projectId = Model.ProjectStatement.ProjectStatementId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("CreateOrUpdateProjectForStudent", "Projects", new { id = Model.Student.StudentId , projectStatementId = Model.ProjectStatement.ProjectStatementId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <p> Upload File</p>
-        <input type="file" id="file" name="file" /><br />
-        <input type="submit" value="Save" />
+        <div class="form-group">
+            <p> Upload File</p>
+            <input type="file" id="file" name="file" /><br />
+            @*<input type="submit" value="Upload" />*@
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Project.AdditionalInfo)
+            @Html.TextBoxFor(m => m.Project.AdditionalInfo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Project.AdditionalInfo)
+        </div>
+        @Html.HiddenFor(m => m.Project.ProjectId)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Save</button>
     }
 </div>
-
-
-@*@if (Model.ProjectStatement.Files != null)
-{
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-4">
-                @Html.DisplayNameFor(model => model.Files.FileName)
-            </th>
-
-            <th class="col-md-2"></th>
-        </tr>
-
-
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Model.ProjectStatement.Files)
-            </td>
-
-            <td>
-                @Html.ActionLink("Download", "DownLoadFile","Files","", new { id = Model.ProjectStatement.ProjectStatementId })
-
-            </td>
-        </tr>
-
-
-    </table>
-}*@
 

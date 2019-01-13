@@ -1,0 +1,33 @@
+﻿@model EducationalPlatform.ViewModels.StudentsProjectStatementProjectsViewModel
+@{
+    ViewBag.Title = "StudentsProjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.ProjectStatement.ProjectName</h2>
+
+@if (Model.Projects.Any())
+{
+    <table id="projects" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Uploaded Date</th>
+                <th>Project Size(MB)</th>
+                <th>Project Mark</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+            <tr>
+                <td>@Html.ActionLink(string.Concat(project.Student.ApplicationUser.FirstName, " ", project.Student.ApplicationUser.LastName), "ProjectDetails", "Projects", new { id = project.ProjectId }, null)</td>
+                <td>@project.UploadedDate</td>
+                <td>@project.FileSize</td>
+                <td>@project.ProjectMark</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
