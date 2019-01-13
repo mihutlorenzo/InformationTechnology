@@ -48,7 +48,7 @@ else
             @foreach (var course in Model.Courses)
             {
                 <tr>
-                    <td>@Html.ActionLink(course.CourseName, "Details", "Courses", new { id = course.CourseId }, null)</td>
+                    <td>@Html.ActionLink(course.CourseName, "CourseDetails", "Courses", new { id = course.CourseId }, null)</td>
                     <td>@course.Specialization.SpecializationName</td>
                     <td>@course.Semester.SemesterName</td>
                     <td>@course.Year.YearName</td>
@@ -63,31 +63,57 @@ else
 }
 
 
-@*@if (!Model.Projects.Any())
-{
-    <p>The student has no project yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
+<table id="project" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Projects' course name</th>
+            <th>Project' name</th>
+            <th>Note</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model.Courses)
+        {
             <tr>
-                <th>Project name</th>
-                <th>Teacher' s name</th>
-                <th>Course name</th>
-                <th>Project mark</th>
+                <td>@course.CourseName</td>
+                @foreach (var project in Model.Projects)
+                {
+                    <td>@project.ProjectStatement.ProjectName</td>
+                    <td>@project.ProjectMark</td>
+                }
+               
+              
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var project in Model.Projects)
-            {
+        }
+    </tbody>
+</table>
+
+@*@if (!Model.Projects.Any())
+    {
+        <p>The student has no project yet.</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead>
                 <tr>
-                    <td>@Html.ActionLink(project.ProjectName, "Index", "Projects", new { id = project.Id }, null)</td>
-                    <td>@string.Concat(string.Concat(project.Course.Teacher.ApplicationUser.FirstName," "), project.Course.Teacher.ApplicationUser.LastName)</td>
-                    <td>@project.Course.CourseName</td>
-                    <td>@project.Mark</td>
+                    <th>Project name</th>
+                    <th>Teacher' s name</th>
+                    <th>Course name</th>
+                    <th>Project mark</th>
                 </tr>
-             }
-        </tbody>
-    </table>
-}*@
+            </thead>
+            <tbody>
+                @foreach (var project in Model.Projects)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(project.ProjectName, "Index", "Projects", new { id = project.Id }, null)</td>
+                        <td>@string.Concat(string.Concat(project.Course.Teacher.ApplicationUser.FirstName," "), project.Course.Teacher.ApplicationUser.LastName)</td>
+                        <td>@project.Course.CourseName</td>
+                        <td>@project.Mark</td>
+                    </tr>
+                 }
+            </tbody>
+        </table>
+    }*@

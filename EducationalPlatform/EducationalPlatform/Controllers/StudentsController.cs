@@ -52,7 +52,7 @@ namespace EducationalPlatform.Controllers
             }
 
             var courses = _context.Students.Where(s => s.StudentId == student.StudentId).SelectMany(c => c.Courses).Include(c => c.Teacher.ApplicationUser).Include(s => s.Specialization).Include(s => s.Semester).Include(s => s.Year).ToList();
-            //var projects = _context.Projects.ToList();
+            var project = _context.Projects.ToList();
 
             //var studentService = new StudentService();
             //var model = studentService.StudentProfile(student, courses, projects);
@@ -60,7 +60,7 @@ namespace EducationalPlatform.Controllers
             //comentat aici
             //foreach (var course in courses)
             //{
-            //    var project = projects.SingleOrDefault(p => p.CourseId == course.CourseId);
+            //    var project = projects.SingleOrDefault(p => p. == course.CourseId);
             //    if (project != null)
             //    {
             //        projects.Add(project);
@@ -72,7 +72,7 @@ namespace EducationalPlatform.Controllers
             {
                 Student = student,
                 Courses = courses,
-               // Projects = projects
+                Projects = project
             };
 
             return View("StudentProfile", studentCoursesProjects);
