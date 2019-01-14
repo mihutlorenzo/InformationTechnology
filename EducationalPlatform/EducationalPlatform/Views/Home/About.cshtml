@@ -1,7 +1,25 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<style>
+    .responsiveCal {
+        position: relative;
+        padding-bottom: 55%;
+        height: 0;
+        overflow: hidden;
+    }
+
+        .responsiveCal iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+</style >
+
+<div class="responsiveCal">
+    <iframe src="https://calendar.google.com/calendar/b/1/embed?showTitle=0&amp;showPrint=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=ro.romanian%23holiday%40group.v.calendar.google.com&amp;color=%23125A12&amp;ctz=Europe%2FBucharest"
+            style="border-width:0" width="1100" height="600" frameborder="0" scrolling="no"></iframe>
+</div>
