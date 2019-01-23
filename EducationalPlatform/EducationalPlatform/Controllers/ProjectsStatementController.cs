@@ -38,7 +38,7 @@ namespace EducationalPlatform.Controllers
 
             var files = _context.Files.Where(f => f.ProjectStatementId == projectId).Include(p =>p.ProjectStatement).ToList();
 
-            var project = _context.Projects.SingleOrDefault(p => p.StudentId == id);
+            var project = _context.Projects.SingleOrDefault(p => p.StudentId == id && p.ProjectStatementId == projectId);
 
             if(project == null)
             {
